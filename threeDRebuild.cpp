@@ -39,6 +39,7 @@ char* SrcImage = "SrcImage//%d.bmp";
 CvPoint2D32f mouse_location;
 int mouse_count = 0;
 double lenth;
+CvPoint lpt[2];
 //char* filename[100];
 
 //读取内参和平面系数矩阵
@@ -244,6 +245,7 @@ void on_mouse( int event, int x, int y, int flags, void* param )
 	if(event == CV_EVENT_LBUTTONDOWN)
 	{
 		CvPoint pt = cvPoint(x, y);
+		lpt[mouse_count] = pt;
 		cvCircle( showtest, pt, 1,cvScalar(125) ,-1, CV_AA, 0 );
 		cvShowImage("待测图", showtest);
 
@@ -269,6 +271,8 @@ void on_mouse( int event, int x, int y, int flags, void* param )
 			cout<<"两点位移值为："<<lenth<<"\n\n";
 			mouse_count = 0;
 			cout<<"等待点击第一点"<<endl;
+			cvLine(showtest, lpt[0], lpt[1], Scalar(0));
+			cvShowImage("待测图", showtest);
 		}
 		else
 			mouse_count++;
